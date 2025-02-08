@@ -15,7 +15,7 @@ export function ProfileContent() {
   const [newMedicalInfo, setNewMedicalInfo] = useState("")
 
   const [prescriptions, setPrescriptions] = useState<{ name: string; url: string }[]>([])
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null)
   
   // Add new mood
   const handleAddMood = () => {
@@ -40,7 +40,7 @@ export function ProfileContent() {
     if (file && file.type === "application/pdf") {
       const url = URL.createObjectURL(file)
       setPrescriptions([...prescriptions, { name: file.name, url }])
-      setSelectedFile(null)
+      // setSelectedFile(null)
     }
   }
 

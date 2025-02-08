@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import type { LucideIcon } from "lucide-react"
+// import type { LucideIcon } from "lucide-react"
 
 interface FeatureCardProps {
   title: string
@@ -11,7 +11,7 @@ interface FeatureCardProps {
 }
 
 // export function FeatureCard({ title, description, icon: Icon, index }: FeatureCardProps) {
-  export function FeatureCard({ title, description, index }: FeatureCardProps) {
+export function FeatureCard({ title, description, index }: FeatureCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

@@ -40,7 +40,7 @@ const FAQ = () => {
     <div className="max-w-3xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center mb-4">Frequently Asked Questions</h2>
       <p className="text-center text-gray-600 mb-8">
-        We are here to help you with any questions you may have. If you don't find what you need, please contact us at {' '}
+        We are here to help you with any questions you may have. If you don not find what you need, please contact us at {' '}
         <a href="mailto:support@transcarenavigator.com" className="text-blue-500 underline">
           support@transcarenavigator.com
         </a>.

@@ -27,7 +27,7 @@ const testimonials = [
 
 const TestimonialsCarousel: React.FC = () => {
   return (
-    <div className="w-full overflow-hidden py-8 bg-gray-50">
+    <div className="w-full overflow-hidden py-8 bg-purple-50">
       <h2 className="text-2xl font-bold text-center mb-4">
         Loved by our community
       </h2>

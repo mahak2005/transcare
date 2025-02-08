@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Navbar } from "@/components/navigation/navbar"
+// import { Navbar } from "@/components/navigation/navbar"
 import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
 
