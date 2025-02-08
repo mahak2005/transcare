@@ -24,10 +24,10 @@ const mainMenuItems = [
   { icon: Calendar, label: "My Schedule", href: "/profile/schedule" },
 ]
 
-const toolsMenuItems = [
-  { icon: Users, label: "Manage Profiles", href: "/profile/manage" },
-  { icon: Compass, label: "Explore OS", href: "/profile/explore" },
-]
+// const toolsMenuItems = [
+//   { icon: Users, label: "Manage Profiles", href: "/profile/manage" },
+//   { icon: Compass, label: "Explore OS", href: "/profile/explore" },
+// ]
 
 export function ProfileSidebar() {
   return (
@@ -53,7 +53,7 @@ export function ProfileSidebar() {
         </nav>
       </div>
 
-      <div>
+      {/* <div>
         <h2 className="px-4 text-xs font-semibold text-slate-500 mb-2">TOOLS</h2>
         <nav className="space-y-1">
           {toolsMenuItems.map((item) => (
@@ -67,7 +67,7 @@ export function ProfileSidebar() {
             </Link>
           ))}
         </nav>
-      </div>
+      </div> */}
     </motion.div>
   )
 }

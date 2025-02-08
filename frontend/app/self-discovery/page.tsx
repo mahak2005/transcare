@@ -19,7 +19,7 @@ export default function SelfDiscoveryPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Self-Discovery Journey
+          {/* Self-Discovery Journey  */}
         </motion.h1>
 
         <div className="flex justify-center mb-8 space-x-4">
@@ -62,7 +62,6 @@ export default function SelfDiscoveryPage() {
   );
 }
 
-// ✅ Fix: Define Prop Types for FeatureButton
 function FeatureButton({
   icon: Icon, // Capitalize component reference
   label,
