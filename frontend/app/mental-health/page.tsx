@@ -7,7 +7,6 @@ import { Navbar } from "@/components/navigation/navbar"
 import { motion } from "framer-motion";
 
 import { useRouter } from "next/navigation";
-// Define types for therapists and reminders
 type Therapist = {
   id: number;
   name: string;
@@ -147,7 +146,7 @@ function TherapistFinder() {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">Find LGBTQ+-Friendly Therapists</h2>
+      <h2 className="text-2xl font-semibold mb-4">Find LGBTQ+ Friendly Therapists</h2>
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="flex">
           <input
