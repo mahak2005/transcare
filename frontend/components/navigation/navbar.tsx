@@ -4,22 +4,38 @@ import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm flex items-center justify-between p-6">
+    <nav className={`sticky top-0 z-50 bg-white shadow-sm flex items-center justify-between ${isScrolled ? "p-3" : "p-3"} transition-all duration-300`}>
       <Link href="/" className="flex items-center space-x-2">
         <Image
           src="/transcarelogo.png"
           alt="TransCare Logo"
           width={32}
           height={32}
-          className="h-8 w-8"
+          className={`${isScrolled ? "h-6 w-6" : "h-6 w-6"} transition-all duration-300`}
         />
-        <span className="text-xl font-bold">TransCare</span>
+        <span className={`text-xl font-bold ${isScrolled ? "text-lg" : "text-xl"} transition-all duration-300`}>TransCare</span>
       </Link>
 
       {/* Desktop Navigation */}
@@ -57,7 +73,7 @@ function NavLinks() {
 
   return (
     <>
-      {["Services", "Self-Discovery", "Mental-Health", "Community", "About"].map((item) => {
+      {["Self-Discovery", "Mental-Health", "Community", "About"].map((item) => {
         const href = `/${item.toLowerCase()}`
         const isActive = pathname === href
 

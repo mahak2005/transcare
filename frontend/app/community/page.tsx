@@ -12,41 +12,41 @@ export default function CommunityPage() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
       <Navbar />
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto py-8">
-        <div className="grid md:grid-cols-[1fr,2fr] gap-8">
-          {/* Left Column - Posts List */}
-          <div className="space-y-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Community Posts</h2>
-              <Button>New Post</Button>
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto py-8">
+          <div className="grid md:grid-cols-[1fr,2fr] gap-8">
+            {/* Left Column - Posts List */}
+            <div className="space-y-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Community Posts</h2>
+                <Button>New Post</Button>
+              </div>
+
+              <div className="space-y-4">
+                {posts.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    isSelected={selectedPost?.id === post.id}
+                    onClick={() => setSelectedPost(post)}
+                  />
+                ))}
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {posts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  post={post}
-                  isSelected={selectedPost?.id === post.id}
-                  onClick={() => setSelectedPost(post)}
-                />
-              ))}
+            {/* Right Column - Selected Post */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              {selectedPost ? (
+                <FullPost post={selectedPost} />
+              ) : (
+                <div className="text-center text-gray-500 py-12">Select a post to view details</div>
+              )}
             </div>
-          </div>
-
-          {/* Right Column - Selected Post */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            {selectedPost ? (
-              <FullPost post={selectedPost} />
-            ) : (
-              <div className="text-center text-gray-500 py-12">Select a post to view details</div>
-            )}
           </div>
         </div>
       </div>
-    </div>
     </div>
   )
 }
@@ -72,9 +72,8 @@ function PostCard({ post, isSelected, onClick }: PostCardProps) {
   return (
     <motion.div whileHover={{ scale: 1.02 }} onClick={onClick}>
       <Card
-        className={`p-4 cursor-pointer transition-colors ${
-          isSelected ? "border-purple-500 bg-purple-50" : "hover:bg-gray-50"
-        }`}
+        className={`p-4 cursor-pointer transition-colors ${isSelected ? "border-purple-500 bg-purple-50" : "hover:bg-gray-50"
+          }`}
       >
         <h3 className="font-semibold mb-2">{post.title}</h3>
         <p className="text-sm text-gray-600 line-clamp-2 mb-3">{post.content}</p>

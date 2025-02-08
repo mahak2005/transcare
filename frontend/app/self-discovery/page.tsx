@@ -10,54 +10,54 @@ export default function SelfDiscoveryPage() {
   const [activeSection, setActiveSection] = useState("quizzes");
 
   return (
-    <div className="min-h-screen bg-white">
-          <Navbar />
-    <div className="max-w-4xl mx-auto px-4">
-      <motion.h1
-        className="text-4xl font-bold text-center mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Self-Discovery Journey
-      </motion.h1>
-
-      <div className="flex justify-center mb-8 space-x-4">
-        <FeatureButton
-          icon={FaQuestionCircle} // Pass the component reference, not JSX
-          label="Quizzes"
-          active={activeSection === "quizzes"}
-          onClick={() => setActiveSection("quizzes")}
-        />
-        <FeatureButton
-          icon={FaBookOpen}
-          label="Resources"
-          active={activeSection === "resources"}
-          onClick={() => setActiveSection("resources")}
-        />
-        <FeatureButton
-          icon={FaPencilAlt}
-          label="Journal"
-          active={activeSection === "journal"}
-          onClick={() => setActiveSection("journal")}
-        />
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeSection}
-          initial={{ opacity: 0, y: 20 }}
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
+      <Navbar />
+      <div className="max-w-4xl mx-auto px-4">
+        <motion.h1
+          className="text-4xl font-bold text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-lg rounded-lg p-6"
         >
-          {activeSection === "quizzes" && <Quizzes />}
-          {activeSection === "resources" && <PersonalizedResources />}
-          {activeSection === "journal" && <JournalingTools />}
-        </motion.div>
-      </AnimatePresence>
-    </div>
+          Self-Discovery Journey
+        </motion.h1>
+
+        <div className="flex justify-center mb-8 space-x-4">
+          <FeatureButton
+            icon={FaQuestionCircle} // Pass the component reference, not JSX
+            label="Quizzes"
+            active={activeSection === "quizzes"}
+            onClick={() => setActiveSection("quizzes")}
+          />
+          <FeatureButton
+            icon={FaBookOpen}
+            label="Resources"
+            active={activeSection === "resources"}
+            onClick={() => setActiveSection("resources")}
+          />
+          <FeatureButton
+            icon={FaPencilAlt}
+            label="Journal"
+            active={activeSection === "journal"}
+            onClick={() => setActiveSection("journal")}
+          />
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white shadow-lg rounded-lg p-6"
+          >
+            {activeSection === "quizzes" && <Quizzes />}
+            {activeSection === "resources" && <PersonalizedResources />}
+            {activeSection === "journal" && <JournalingTools />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -78,9 +78,8 @@ function FeatureButton({
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className={`flex items-center px-4 py-2 rounded-full transition-colors duration-200 ${
-        active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-purple-200"
-      }`}
+      className={`flex items-center px-4 py-2 rounded-full transition-colors duration-200 ${active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-purple-200"
+        }`}
       onClick={onClick}
     >
       <Icon className="text-lg" /> {/* Render the icon component */}

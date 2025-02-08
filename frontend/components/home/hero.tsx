@@ -70,7 +70,7 @@ function AppPreview() {
     >
       <div className="relative aspect-square max-w-md mx-auto">
         <Image
-          src="/placeholder.svg?height=500&width=500"
+          src="/main.png"
           alt="TransCare App Preview"
           width={500}
           height={500}

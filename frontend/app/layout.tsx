@@ -16,6 +16,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "TransCare",
   description: "Website for LGBTEQ+ Community", 
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
