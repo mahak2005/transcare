@@ -73,7 +73,7 @@ function NavLinks() {
 
   return (
     <>
-      {["Self-Discovery", "Mental-Health", "Community", "About"].map((item) => {
+      {["Self-Discovery", "Mental-Health", "Community", "About", "Profile"].map((item) => {
         const href = `/${item.toLowerCase()}`
         const isActive = pathname === href
 
