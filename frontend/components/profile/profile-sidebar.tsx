@@ -6,11 +6,6 @@ import {
   LayoutDashboard,
   MessageSquare,
   FileText,
-  Briefcase,
-  Calendar,
-  Users,
-  Compass,
-  Settings,
   BarChart,
 } from "lucide-react"
 
@@ -19,9 +14,7 @@ const mainMenuItems = [
   { icon: BarChart, label: "Mood", href: "/profile/mood" },
   { icon: MessageSquare, label: "Notes", href: "/profile/notes" },
   { icon: FileText, label: "HRT", href: "/profile/hrt" },
-  // { icon: Briefcase, label: "Proposals", href: "/profile/proposals" },
-  // { icon: Settings, label: "Deals", href: "/profile/deals" },
-  // { icon: Calendar, label: "My Schedule", href: "/profile/schedule" },
+  
 ]
 
 
