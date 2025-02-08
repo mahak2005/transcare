@@ -2,7 +2,10 @@ import { Navbar } from "@/components/navigation/navbar";
 import { Hero } from "@/components/home/hero";
 import { FeatureCard } from "@/components/home/feature-card";
 import { features } from "@/lib/features";
-import AnimatedMap from "@/components/home/AnimatedMap";
+// import AnimatedMap from "@/components/home/AnimatedMap";
+import FAQ from "@/components/home/FAQ";
+import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
+import Footer from "@/components/home/Footer";
 
 export default function HomePage() {
   return (
@@ -18,8 +21,12 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Animated Map Section */}
-        {/* <AnimatedMap /> */}
+        {/* FAQ section */}
+        <FAQ />
+
+        <TestimonialsCarousel />
+
+        <Footer />
       </main>
     </div>
   );

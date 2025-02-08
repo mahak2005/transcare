@@ -29,50 +29,50 @@ export default function MentalHealthWellness() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
-          <Navbar />
-    <div className="max-w-4xl mx-auto">
-      <motion.h1
-        className="text-4xl font-bold text-center mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Mental Health & Wellness
-      </motion.h1>
+      <Navbar />
+      <div className="max-w-4xl mx-auto">
+        <motion.h1
+          className="text-4xl font-bold text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Mental Health & Wellness */}
+        </motion.h1>
 
-      <div className="flex justify-center mb-8">
-        <TabButton
-          icon={<FaSearch />}
-          label="Therapist Finder"
-          active={activeTab === "therapist"}
-          onClick={() => setActiveTab("therapist")}
-        />
-        <TabButton
-          icon={<FaBook />}
-          label="Mental Health Resources"
-          active={activeTab === "resources"}
-          onClick={() => setActiveTab("resources")}
-        />
-        <TabButton
-          icon={<FaBell />}
-          label="Wellness Reminders"
-          active={activeTab === "reminders"}
-          onClick={() => setActiveTab("reminders")}
-        />
+        <div className="flex justify-center mb-8">
+          <TabButton
+            icon={<FaSearch />}
+            label="Therapist Finder"
+            active={activeTab === "therapist"}
+            onClick={() => setActiveTab("therapist")}
+          />
+          <TabButton
+            icon={<FaBook />}
+            label="Mental Health Resources"
+            active={activeTab === "resources"}
+            onClick={() => setActiveTab("resources")}
+          />
+          <TabButton
+            icon={<FaBell />}
+            label="Wellness Reminders"
+            active={activeTab === "reminders"}
+            onClick={() => setActiveTab("reminders")}
+          />
+        </div>
+
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white shadow-lg rounded-lg p-6"
+        >
+          {activeTab === "therapist" && <TherapistFinder />}
+          {activeTab === "resources" && <MentalHealthResources />}
+          {activeTab === "reminders" && <WellnessReminders />}
+        </motion.div>
       </div>
-
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-white shadow-lg rounded-lg p-6"
-      >
-        {activeTab === "therapist" && <TherapistFinder />}
-        {activeTab === "resources" && <MentalHealthResources />}
-        {activeTab === "reminders" && <WellnessReminders />}
-      </motion.div>
-    </div>
     </div>
   );
 }
@@ -90,9 +90,8 @@ function TabButton({ icon, label, active, onClick }: TabButtonProps) {
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className={`flex items-center px-4 py-2 mx-2 rounded-full ${
-        active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700"
-      }`}
+      className={`flex items-center px-4 py-2 mx-2 rounded-full ${active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700"
+        }`}
       onClick={onClick}
       aria-label={label}
     >
@@ -295,13 +294,13 @@ function WellnessReminders() {
   const addReminder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-  
+
     // Use type assertions to tell TypeScript about the form elements
     const title = (form.elements.namedItem("title") as HTMLInputElement).value;
     const date = (form.elements.namedItem("date") as HTMLInputElement).value;
     const time = (form.elements.namedItem("time") as HTMLInputElement).value;
     const type = (form.elements.namedItem("type") as HTMLSelectElement).value;
-  
+
     const newReminder: Reminder = {
       id: reminders.length + 1,
       title,
@@ -309,7 +308,7 @@ function WellnessReminders() {
       time,
       type,
     };
-  
+
     setReminders([...reminders, newReminder]);
     form.reset();
   };
