@@ -2,10 +2,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { FaSearch, FaBook, FaBell } from "react-icons/fa";
 import { Navbar } from "@/components/navigation/navbar"
+import { motion } from "framer-motion";
 
+import { useRouter } from "next/navigation";
 // Define types for therapists and reminders
 type Therapist = {
   id: number;
@@ -77,7 +78,6 @@ export default function MentalHealthWellness() {
   );
 }
 
-// Define props for TabButton
 type TabButtonProps = {
   icon: React.ReactNode;
   label: string;
@@ -141,14 +141,7 @@ function TherapistFinder() {
         yearsExperience: 6,
         languages: ["English", "Korean"],
       },
-      {
-        id: 5,
-        name: "Dr. Olivia Martinez",
-        specialty: "Gender Transition Counseling",
-        rating: 4.8,
-        yearsExperience: 9,
-        languages: ["English", "Spanish"],
-      },
+      
     ]);
   };
 
@@ -213,8 +206,93 @@ function TherapistFinder() {
   );
 }
 
+// function MentalHealthResources() {
+//   const resources = [
+//     {
+//       id: 1,
+//       title: "Understanding Gender Dysphoria",
+//       type: "Article",
+//       description: "An in-depth look at gender dysphoria, its symptoms, and coping strategies.",
+//       link: "#",
+//     },
+//     {
+//       id: 2,
+//       title: "LGBTQ+ Support Group - Virtual Meetings",
+//       type: "Support Group",
+//       description: "Weekly online meetings for LGBTQ+ individuals to share experiences and find support.",
+//       link: "#",
+//     },
+//     {
+//       id: 3,
+//       title: "Mindfulness for Gender Dysphoria",
+//       type: "Mental Health Tool",
+//       description: "A collection of mindfulness exercises specifically designed to help manage gender dysphoria.",
+//       link: "#",
+//     },
+//     {
+//       id: 4,
+//       title: "Coming Out: A Guide for LGBTQ+ Youth",
+//       type: "E-Book",
+//       description: "A comprehensive guide to coming out, including tips, personal stories, and resources.",
+//       link: "#",
+//     },
+//     {
+//       id: 5,
+//       title: "Trans-Inclusive Workplace Policies",
+//       type: "Informational Guide",
+//       description: "Information on creating and advocating for trans-inclusive policies in the workplace.",
+//       link: "#",
+//     },
+//   ];
+
+//   return (
+//     <div>
+//       <h2 className="text-2xl font-semibold mb-4">Mental Health Resources</h2>
+//       <div className="space-y-4">
+//         {resources.map((resource) => (
+//           <motion.div
+//             key={resource.id}
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.5 }}
+//             className="bg-gray-100 p-4 rounded-lg"
+//           >
+//             <h3 className="text-xl font-semibold">{resource.title}</h3>
+//             <p className="text-gray-600">{resource.type}</p>
+//             <p className="mt-2">{resource.description}</p>
+//             <motion.a
+//               href={resource.link}
+//               whileHover={{ scale: 1.05 }}
+//               whileTap={{ scale: 0.95 }}
+//               className="mt-2 inline-block bg-purple-600 text-white px-4 py-2 rounded"
+//             >
+//               Access Resource
+//             </motion.a>
+//           </motion.div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+interface Resource {
+  id: number;
+  title: string;
+  type: string;
+  description: string;
+  link: string;
+}
 function MentalHealthResources() {
-  const resources = [
+  const router = useRouter(); // Correct hook for Next.js navigation
+
+  const resources: Resource[] = [
+    {
+      id: 4,
+      title: "Coming Out: A Guide for LGBTQ+ Youth",
+      type: "E-Book",
+      description: "A comprehensive guide to coming out, including tips, personal stories, and resources.",
+      link: "/mental-health/coming-out-guide", // Updated link to a Next.js route
+    },
     {
       id: 1,
       title: "Understanding Gender Dysphoria",
@@ -224,25 +302,13 @@ function MentalHealthResources() {
     },
     {
       id: 2,
-      title: "LGBTQ+ Support Group - Virtual Meetings",
+      title: "LGBTQ+ Support Group",
       type: "Support Group",
       description: "Weekly online meetings for LGBTQ+ individuals to share experiences and find support.",
       link: "#",
     },
-    {
-      id: 3,
-      title: "Mindfulness for Gender Dysphoria",
-      type: "Mental Health Tool",
-      description: "A collection of mindfulness exercises specifically designed to help manage gender dysphoria.",
-      link: "#",
-    },
-    {
-      id: 4,
-      title: "Coming Out: A Guide for LGBTQ+ Youth",
-      type: "E-Book",
-      description: "A comprehensive guide to coming out, including tips, personal stories, and resources.",
-      link: "#",
-    },
+    
+    
     {
       id: 5,
       title: "Trans-Inclusive Workplace Policies",
@@ -253,7 +319,7 @@ function MentalHealthResources() {
   ];
 
   return (
-    <div>
+    <div className="p-6">
       <h2 className="text-2xl font-semibold mb-4">Mental Health Resources</h2>
       <div className="space-y-4">
         {resources.map((resource) => (
@@ -262,19 +328,19 @@ function MentalHealthResources() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-100 p-4 rounded-lg"
+            className="bg-gray-100 p-4 rounded-lg shadow-lg"
           >
             <h3 className="text-xl font-semibold">{resource.title}</h3>
             <p className="text-gray-600">{resource.type}</p>
             <p className="mt-2">{resource.description}</p>
-            <motion.a
-              href={resource.link}
+            <motion.button
+              onClick={() => router.push(resource.link)} // Corrected navigation
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="mt-2 inline-block bg-purple-600 text-white px-4 py-2 rounded"
             >
               Access Resource
-            </motion.a>
+            </motion.button>
           </motion.div>
         ))}
       </div>
