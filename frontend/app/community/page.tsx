@@ -1,164 +1,141 @@
 "use client"
+import React, { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Navbar } from '@/components/navigation/navbar';
 
-import { motion } from "framer-motion"
-import { Heart, MessageCircle, Share2 } from "lucide-react"
-import { useState } from "react"
-import { Navbar } from "@/components/navigation/navbar"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
+interface Blog {
+  id: number;
+  title: string;
+  description: string;
+  likes: number;
+  comments: string[];
+}
 
-export default function CommunityPage() {
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
+const blogsData: Blog[] = [
+  { id: 1, title: 'React Code Editor', description: 'Build your own code editor that compiles and runs 40+ programming languages.', likes: 57, comments: [] },
+  { id: 2, title: 'Simple Developer Portfolio', description: 'A simple portfolio for developers to showcase their skills and projects.', likes: 116, comments: [] },
+  { id: 3, title: 'Devmedium', description: 'A Dev.to & Medium-like blogging platform with custom usernames in Next.js.', likes: 1, comments: [] },
+  // Add more blogs as needed
+];
+
+const BlogCard: React.FC<{ blog: Blog; onClick: () => void }> = ({ blog, onClick }) => (
+  <Card
+    onClick={onClick}
+    className="bg-white hover:bg-gray-100 transition-transform transform hover:scale-105 p-4 rounded-2xl shadow-md cursor-pointer"
+  >
+    <CardContent>
+      <h3 className="text-lg font-bold mb-2">{blog.title}</h3>
+      <p className="text-sm text-gray-600">{blog.description}</p>
+      <div className="mt-4 text-sm text-gray-500">Likes: {blog.likes}</div>
+    </CardContent>
+  </Card>
+);
+
+const BlogDetails: React.FC<{ blog: Blog; onBack: () => void; onComment: (comment: string) => void }> = ({ blog, onBack, onComment }) => {
+  const [comment, setComment] = useState('');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
+    <div className="p-4 bg-white rounded-2xl shadow-md">
+      <Button onClick={onBack} className="mb-4">Back to Blogs</Button>
+      <h2 className="text-2xl font-bold mb-2">{blog.title}</h2>
+      <p className="text-gray-700 mb-4">{blog.description}</p>
+
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">Comments:</h3>
+        <ul className="list-disc pl-5">
+          {blog.comments.map((comment, index) => (
+            <li key={index} className="text-gray-600">{comment}</li>
+          ))}
+        </ul>
+      </div>
+
+      <input
+        type="text"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Add a comment"
+        className="border p-2 w-full rounded-md mb-2"
+      />
+      <Button onClick={() => { onComment(comment); setComment(''); }}>Post Comment</Button>
+    </div>
+  );
+};
+
+const AddBlogForm: React.FC<{ onAdd: (newBlog: Blog) => void }> = ({ onAdd }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = () => {
+    const newBlog: Blog = {
+      id: Date.now(),
+      title,
+      description,
+      likes: 0,
+      comments: []
+    };
+    onAdd(newBlog);
+    setTitle('');
+    setDescription('');
+  };
+
+  return (
+    <div className="p-4 bg-white rounded-2xl shadow-md mb-4">
+      <h2 className="text-xl font-bold mb-2">Add a New Blog</h2>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Blog Title"
+        className="border p-2 w-full rounded-md mb-2"
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Blog Description"
+        className="border p-2 w-full rounded-md mb-2"
+      />
+      <Button onClick={handleSubmit}>Add Blog</Button>
+    </div>
+  );
+};
+
+const BlogPage: React.FC = () => {
+  const [blogs, setBlogs] = useState(blogsData);
+  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+
+  const handleAddBlog = (newBlog: Blog) => {
+    setBlogs([newBlog, ...blogs]);
+  };
+
+  const handleComment = (comment: string) => {
+    if (selectedBlog) {
+      const updatedBlogs = blogs.map(blog =>
+        blog.id === selectedBlog.id ? { ...blog, comments: [...blog.comments, comment] } : blog
+      );
+      setBlogs(updatedBlogs);
+      setSelectedBlog({ ...selectedBlog, comments: [...selectedBlog.comments, comment] });
+    }
+  };
+
+  return (
+    
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100 p-6">
       <Navbar />
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto py-8">
-          <div className="grid md:grid-cols-[1fr,2fr] gap-8">
-            {/* Left Column - Posts List */}
-            <div className="space-y-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Community Posts</h2>
-                <Button>New Post</Button>
-              </div>
-
-              <div className="space-y-4">
-                {posts.map((post) => (
-                  <PostCard
-                    key={post.id}
-                    post={post}
-                    isSelected={selectedPost?.id === post.id}
-                    onClick={() => setSelectedPost(post)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Right Column - Selected Post */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              {selectedPost ? (
-                <FullPost post={selectedPost} />
-              ) : (
-                <div className="text-center text-gray-500 py-12">Select a post to view details</div>
-              )}
-            </div>
+      {selectedBlog ? (
+        <BlogDetails blog={selectedBlog} onBack={() => setSelectedBlog(null)} onComment={handleComment} />
+      ) : (
+        <>
+          <AddBlogForm onAdd={handleAddBlog} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map(blog => (
+              <BlogCard key={blog.id} blog={blog} onClick={() => setSelectedBlog(blog)} />
+            ))}
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-interface Post {
-  id: number
-  title: string
-  content: string
-  author: string
-  date: string
-  likes: number
-  comments: number
-  tags: string[]
-}
-
-interface PostCardProps {
-  post: Post
-  isSelected: boolean
-  onClick: () => void
-}
-
-function PostCard({ post, isSelected, onClick }: PostCardProps) {
-  return (
-    <motion.div whileHover={{ scale: 1.02 }} onClick={onClick}>
-      <Card
-        className={`p-4 cursor-pointer transition-colors ${isSelected ? "border-purple-500 bg-purple-50" : "hover:bg-gray-50"
-          }`}
-      >
-        <h3 className="font-semibold mb-2">{post.title}</h3>
-        <p className="text-sm text-gray-600 line-clamp-2 mb-3">{post.content}</p>
-        <div className="flex items-center justify-between text-sm text-gray-500">
-          <span>{post.author}</span>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              <Heart className="w-4 h-4" /> {post.likes}
-            </span>
-            <span className="flex items-center gap-1">
-              <MessageCircle className="w-4 h-4" /> {post.comments}
-            </span>
-          </div>
-        </div>
-      </Card>
-    </motion.div>
-  )
-}
-
-function FullPost({ post }: { post: Post }) {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
-          <span>
-            By {post.author} • {post.date}
-          </span>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              <Heart className="w-4 h-4 mr-2" /> {post.likes}
-            </Button>
-            <Button variant="ghost" size="sm">
-              <Share2 className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-        <p className="text-gray-700 leading-relaxed">{post.content}</p>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="font-semibold">Add a Comment</h3>
-        <Textarea placeholder="Share your thoughts..." className="min-h-[100px]" />
-        <Button>Post Comment</Button>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="font-semibold">Comments</h3>
-        {comments.map((comment) => (
-          <Card key={comment.id} className="p-4">
-            <div className="flex justify-between mb-2">
-              <span className="font-medium">{comment.author}</span>
-              <span className="text-sm text-gray-500">{comment.date}</span>
-            </div>
-            <p className="text-gray-700">{comment.content}</p>
-          </Card>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Sample data
-const posts: Post[] = [
-  {
-    id: 1,
-    title: "Seeking Support: Starting My Transition Journey",
-    content:
-      "Hello everyone, I'm about to begin my transition journey and looking for advice and support from those who've been through this...",
-    author: "Alex M.",
-    date: "2h ago",
-    likes: 24,
-    comments: 12,
-    tags: ["support", "transition"],
-  },
-  // Add more posts...
-]
-
-const comments = [
-  {
-    id: 1,
-    author: "Sam P.",
-    date: "1h ago",
-    content: "Thank you for sharing your story. I went through something similar last year...",
-  },
-  // Add more comments...
-]
-
+export default BlogPage;

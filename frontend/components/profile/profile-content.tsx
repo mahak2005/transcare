@@ -45,7 +45,7 @@ export function ProfileContent() {
   }
 
   return (
-    <div className="flex-1 space-y-6">
+    <div className="flex-1 space-y-6 ">
       {/* MOOD TRACKER */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}

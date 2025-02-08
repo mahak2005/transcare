@@ -27,7 +27,7 @@ export function ProfileSidebar() {
       className="w-full lg:w-64 space-y-8"
     >
       <div>
-        <h2 className="px-4 text-xs font-semibold text-slate-500 mb-2">MAIN</h2>
+        <h2 className="px-4 text-xs font-semibold text-slate-500 mb-2"></h2>
         <nav className="space-y-1">
           {mainMenuItems.map((item) => (
             <Link

@@ -11,12 +11,12 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
       {/* Navbar */}
       <Navbar />
 
       {/* Main Layout */}
-      <div className="pt-16 flex">
+      <div className="1 flex ">
         {/* Sidebar (Hidden on mobile, visible on large screens) */}
         <div className={`fixed lg:relative z-30 bg-white transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:w-64`}>
           <ProfileSidebar />
