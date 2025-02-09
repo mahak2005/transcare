@@ -1,22 +1,22 @@
-// components/AuthForm.tsx
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import Next.js router
 
 interface AuthFormProps {
   isLogin: boolean;
-  onSubmit: (data: { lastName?: string; email: string; password: string }) => void;
   onToggleAuthMode: () => void;
 }
 
-export function AuthForm({ isLogin, onSubmit, onToggleAuthMode }: AuthFormProps) {
-  const [lastName, setLastName] = useState("");
+export function AuthForm({ isLogin, onToggleAuthMode }: AuthFormProps) {
+  const [Name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter(); // Initialize router
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ lastName, email, password });
+    router.push("/"); // Redirect user to homepage after clicking Login
   };
 
   return (
@@ -27,26 +27,24 @@ export function AuthForm({ isLogin, onSubmit, onToggleAuthMode }: AuthFormProps)
             Welcome to TransCare
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            {isLogin
-              ? "Login to TransCare"
-              : "Create an account to get started"}
+            {isLogin ? "Login to TransCare" : "Create an account to get started"}
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {!isLogin && (
             <div>
-              <label htmlFor="last-name" className="sr-only">
-                Last name
+              <label htmlFor="name" className="sr-only">
+                Name
               </label>
               <input
-                id="last-name"
-                name="last-name"
+                id="name"
+                name="name"
                 type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Name"
+                value={Name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           )}
@@ -94,9 +92,7 @@ export function AuthForm({ isLogin, onSubmit, onToggleAuthMode }: AuthFormProps)
             onClick={onToggleAuthMode}
             className="text-sm text-blue-600 hover:text-blue-500"
           >
-            {isLogin
-              ? "Need an account? Sign up"
-              : "Already have an account? Login"}
+            {isLogin ? "Need an account? Sign up" : "Already have an account? Login"}
           </button>
         </div>
       </div>
