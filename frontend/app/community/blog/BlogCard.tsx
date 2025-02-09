@@ -1,4 +1,3 @@
-"use client"
 import type React from "react"
 import Image from "next/image"
 import { Heart, MessageCircle } from "lucide-react"
@@ -14,11 +13,17 @@ interface BlogCardProps {
     comments: number
     image: string
   }
+  onClick: () => void
 }
 
-export const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
+export const BlogCard: React.FC<BlogCardProps> = ({ blog, onClick }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+    <div
+      className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105  cursor-pointer group p-6 rounded-xl bg-gradient-to-br from-white to-gray-50 shadow-lg 
+      hover:shadow-xl transition-all duration-300 cursor-pointer
+      hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-80"
+      onClick={onClick}
+    >
       <Image
         src={blog.image || "/placeholder.svg"}
         alt={blog.title}
@@ -47,4 +52,3 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
   )
 }
 
-// export default BlogCard;

@@ -11,7 +11,7 @@ interface TypewriterTextProps {
 
 export function TypewriterText({ text, delay = 0, speed = 50 }: TypewriterTextProps) {
   const [displayText, setDisplayText] = useState("")
-  const controls = useAnimation()
+  // const controls = useAnimation()
 
   useEffect(() => {
     let currentText = ""

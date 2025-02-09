@@ -6,18 +6,32 @@ import { X } from "lucide-react"
 
 interface WriteBlogFormProps {
   onClose: () => void
+  onSubmit: (blog: {
+    title: string
+    author: string
+    date: string
+    snippet: string
+    content: string
+    image: string
+  }) => void
 }
 
-export const WriteBlogForm: React.FC<WriteBlogFormProps> = ({ onClose }) => {
+export const WriteBlogForm: React.FC<WriteBlogFormProps> = ({ onClose, onSubmit }) => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
-  const [tags, setTags] = useState("")
+  const [author, setAuthor] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle blog submission logic here
-    console.log({ title, content, tags })
-    onClose()
+    const newBlog = {
+      title,
+      author,
+      date: new Date().toISOString().split("T")[0],
+      snippet: content.slice(0, 100) + "...",
+      content,
+      image: "/placeholder.svg?height=200&width=300",
+    }
+    onSubmit(newBlog)
   }
 
   return (
@@ -43,6 +57,19 @@ export const WriteBlogForm: React.FC<WriteBlogFormProps> = ({ onClose }) => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="author" className="block text-gray-700 font-semibold mb-2">
+            Author
+          </label>
+          <input
+            type="text"
+            id="author"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
+            required
+          />
+        </div>
+        <div className="mb-4">
           <label htmlFor="content" className="block text-gray-700 font-semibold mb-2">
             Content
           </label>
@@ -54,29 +81,6 @@ export const WriteBlogForm: React.FC<WriteBlogFormProps> = ({ onClose }) => {
             rows={6}
             required
           ></textarea>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="tags" className="block text-gray-700 font-semibold mb-2">
-            Tags (comma-separated)
-          </label>
-          <input
-            type="text"
-            id="tags"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="cover-image" className="block text-gray-700 font-semibold mb-2">
-            Cover Image
-          </label>
-          <input
-            type="file"
-            id="cover-image"
-            accept="image/*"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
-          />
         </div>
         <button
           type="submit"

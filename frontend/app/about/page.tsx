@@ -113,7 +113,7 @@ export default function About() {
         <input
           type="text"
           name="food"
-          placeholder="What's your favorite food?"
+          placeholder="Whats your favorite food?"
           value={formData.food}
           onChange={handleChange}
           className="w-full mt-2 p-3 border rounded-lg focus:ring-purple-500 focus:border-purple-500"
@@ -168,7 +168,7 @@ export default function About() {
 
       {/* Additional Comments */}
       <div className="mb-6">
-        <label className="block text-lg font-medium text-gray-700">Anything else you'd like us to know?</label>
+        <label className="block text-lg font-medium text-gray-700">Anything else you would like us to know?</label>
         <textarea
           name="additionalComments"
           placeholder="Share your thoughts or suggestions"

@@ -13,11 +13,15 @@ interface BlogCardProps {
     comments: number
     image: string
   }
+  onClick: () => void
 }
 
-export const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
+export const BlogCard: React.FC<BlogCardProps> = ({ blog, onClick }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+    <div
+      className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 cursor-pointer"
+      onClick={onClick}
+    >
       <Image
         src={blog.image || "/placeholder.svg"}
         alt={blog.title}
@@ -46,4 +50,3 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
   )
 }
 
-export default BlogCard;
