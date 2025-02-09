@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaQuestionCircle, FaBookOpen, FaPencilAlt } from "react-icons/fa";
@@ -87,10 +88,16 @@ function FeatureButton({
   );
 }
 
+
 function Quizzes() {
+  const router = useRouter();
+
+  const handleStartQuiz = () => {
+    router.push("/about"); // Redirects to '/about/page.tsx'
+  };
+
   const quizzes = [
-    { id: 1, title: "Gender Identity Exploration", description: "Understand your gender identity and expression." },
-    { id: 2, title: "Sexual Orientation Spectrum", description: "Explore your sexual and romantic attractions." },
+    { id: 1, title: "Identity Exploration", description: "Understand your identity and expression." },
     {
       id: 3,
       title: "Emotional Well-being Assessment",
@@ -115,6 +122,7 @@ function Quizzes() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleStartQuiz} // Clicking this button redirects to /about
               className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors"
             >
               Start Quiz
@@ -125,7 +133,7 @@ function Quizzes() {
     </div>
   );
 }
-
+  
 function PersonalizedResources() {
   const resources = [
     { id: 1, title: "Understanding Non-Binary Identities", type: "Article" },
