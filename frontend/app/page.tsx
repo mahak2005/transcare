@@ -6,6 +6,7 @@ import { features } from "@/lib/features";
 import FAQ from "@/components/home/FAQ";
 import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
 import Footer from "@/components/home/Footer";
+import LandbotChat from "@/components/Landbot/LandbotChat";
 
 export default function HomePage() {
   return (
@@ -25,7 +26,7 @@ export default function HomePage() {
         <FAQ />
 
         <TestimonialsCarousel />
-
+        <LandbotChat />
         <Footer />
       </main>
     </div>

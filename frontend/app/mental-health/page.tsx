@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaSearch, FaBook, FaBell } from "react-icons/fa";
 import { Navbar } from "@/components/navigation/navbar"
 import { motion } from "framer-motion";
-
+import { BookingModal } from "./booking-modal";
 import { useRouter } from "next/navigation";
 type Therapist = {
   id: number;
@@ -23,7 +23,27 @@ type Reminder = {
   time: string;
   type: string;
 };
+type TabButtonProps = {
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+  onClick: () => void;
+};
 
+function TabButton({ icon, label, active, onClick }: TabButtonProps) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={`flex items-center px-4 py-2 mx-2 rounded-full ${active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700"}`}
+      onClick={onClick}
+      aria-label={label}
+    >
+      {icon}
+      <span className="ml-2">{label}</span>
+    </motion.button>
+  );
+}
 export default function MentalHealthWellness() {
   const [activeTab, setActiveTab] = useState("therapist");
 
@@ -77,40 +97,30 @@ export default function MentalHealthWellness() {
   );
 }
 
-type TabButtonProps = {
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  onClick: () => void;
-};
 
-function TabButton({ icon, label, active, onClick }: TabButtonProps) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={`flex items-center px-4 py-2 mx-2 rounded-full ${active ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-700"
-        }`}
-      onClick={onClick}
-      aria-label={label}
-    >
-      {icon}
-      <span className="ml-2">{label}</span>
-    </motion.button>
-  );
-}
+// interface Therapist {
+//   id: number
+//   name: string
+//   specialty: string
+//   rating: number
+//   yearsExperience: number
+//   languages: string[]
+//   image?: string
+// }
 
 function TherapistFinder() {
-  const [pincode, setPincode] = useState("");
-  const [therapists, setTherapists] = useState<Therapist[]>([]);
+  const [pincode, setPincode] = useState("")
+  const [therapists, setTherapists] = useState<Therapist[]>([])
+  const [selectedTherapist, setSelectedTherapist] = useState<Therapist | null>(null)
+  const [showBookingModal, setShowBookingModal] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     // Hardcoded therapist data
     setTherapists([
       {
         id: 1,
-        name: "Dr. Emily Chen",
+        name: "Dr. Emily",
         specialty: "LGBTQ+ Counseling",
         rating: 4.9,
         yearsExperience: 10,
@@ -118,7 +128,7 @@ function TherapistFinder() {
       },
       {
         id: 2,
-        name: "Dr. Michael Rodriguez",
+        name: "Dr. Rahul Sachdeva",
         specialty: "Gender Identity Specialist",
         rating: 4.8,
         yearsExperience: 8,
@@ -126,7 +136,7 @@ function TherapistFinder() {
       },
       {
         id: 3,
-        name: "Dr. Sarah Johnson",
+        name: "Dr. Sarah",
         specialty: "Transgender Health",
         rating: 4.7,
         yearsExperience: 12,
@@ -134,18 +144,22 @@ function TherapistFinder() {
       },
       {
         id: 4,
-        name: "Dr. Alex Kim",
+        name: "Dr. Kavya Sharma",
         specialty: "LGBTQ+ Youth Counseling",
         rating: 4.9,
         yearsExperience: 6,
         languages: ["English", "Korean"],
       },
-      
-    ]);
-  };
+    ])
+  }
+
+  const handleBookSession = (therapist: Therapist) => {
+    setSelectedTherapist(therapist)
+    setShowBookingModal(true)
+  }
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-semibold mb-4">Find LGBTQ+ Friendly Therapists</h2>
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="flex">
@@ -154,19 +168,20 @@ function TherapistFinder() {
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
             placeholder="Enter your pincode"
-            className="flex-grow p-2 border border-gray-300 rounded-l"
+            className="flex-grow p-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="bg-purple-600 text-white px-4 py-2 rounded-r"
+            className="bg-purple-600 text-white px-4 py-2 rounded-r hover:bg-purple-700 transition-colors"
           >
             Search
           </motion.button>
         </div>
       </form>
+
       {therapists.length > 0 && (
         <div className="space-y-4">
           {therapists.map((therapist) => (
@@ -175,25 +190,18 @@ function TherapistFinder() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-100 p-4 rounded-lg"
+              className="bg-gray-100 p-4 rounded-lg shadow-md"
             >
               <h3 className="text-xl font-semibold">{therapist.name}</h3>
-              <p>
-                <strong>Specialty:</strong> {therapist.specialty}
-              </p>
-              <p>
-                <strong>Rating:</strong> {therapist.rating}/5
-              </p>
-              <p>
-                <strong>Experience:</strong> {therapist.yearsExperience} years
-              </p>
-              <p>
-                <strong>Languages:</strong> {therapist.languages.join(", ")}
-              </p>
+              <p><strong>Specialty:</strong> {therapist.specialty}</p>
+              <p><strong>Rating:</strong> {therapist.rating}/5</p>
+              <p><strong>Experience:</strong> {therapist.yearsExperience} years</p>
+              <p><strong>Languages:</strong> {therapist.languages.join(", ")}</p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded"
+                onClick={() => handleBookSession(therapist)}
+                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
               >
                 Book Session
               </motion.button>
@@ -201,78 +209,14 @@ function TherapistFinder() {
           ))}
         </div>
       )}
+
+      {showBookingModal && selectedTherapist && (
+        <BookingModal therapist={selectedTherapist} onClose={() => setShowBookingModal(false)} />
+      )}
     </div>
-  );
+  )
 }
 
-// function MentalHealthResources() {
-//   const resources = [
-//     {
-//       id: 1,
-//       title: "Understanding Gender Dysphoria",
-//       type: "Article",
-//       description: "An in-depth look at gender dysphoria, its symptoms, and coping strategies.",
-//       link: "#",
-//     },
-//     {
-//       id: 2,
-//       title: "LGBTQ+ Support Group - Virtual Meetings",
-//       type: "Support Group",
-//       description: "Weekly online meetings for LGBTQ+ individuals to share experiences and find support.",
-//       link: "#",
-//     },
-//     {
-//       id: 3,
-//       title: "Mindfulness for Gender Dysphoria",
-//       type: "Mental Health Tool",
-//       description: "A collection of mindfulness exercises specifically designed to help manage gender dysphoria.",
-//       link: "#",
-//     },
-//     {
-//       id: 4,
-//       title: "Coming Out: A Guide for LGBTQ+ Youth",
-//       type: "E-Book",
-//       description: "A comprehensive guide to coming out, including tips, personal stories, and resources.",
-//       link: "#",
-//     },
-//     {
-//       id: 5,
-//       title: "Trans-Inclusive Workplace Policies",
-//       type: "Informational Guide",
-//       description: "Information on creating and advocating for trans-inclusive policies in the workplace.",
-//       link: "#",
-//     },
-//   ];
-
-//   return (
-//     <div>
-//       <h2 className="text-2xl font-semibold mb-4">Mental Health Resources</h2>
-//       <div className="space-y-4">
-//         {resources.map((resource) => (
-//           <motion.div
-//             key={resource.id}
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 0.5 }}
-//             className="bg-gray-100 p-4 rounded-lg"
-//           >
-//             <h3 className="text-xl font-semibold">{resource.title}</h3>
-//             <p className="text-gray-600">{resource.type}</p>
-//             <p className="mt-2">{resource.description}</p>
-//             <motion.a
-//               href={resource.link}
-//               whileHover={{ scale: 1.05 }}
-//               whileTap={{ scale: 0.95 }}
-//               className="mt-2 inline-block bg-purple-600 text-white px-4 py-2 rounded"
-//             >
-//               Access Resource
-//             </motion.a>
-//           </motion.div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 interface Resource {
   id: number;

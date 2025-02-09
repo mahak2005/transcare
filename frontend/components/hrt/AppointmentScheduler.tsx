@@ -3,7 +3,7 @@ import { Calendar, Clock } from "lucide-react"
 const appointments = [
   {
     id: 1,
-    doctor: "Dr. Emily Chen",
+    doctor: "Dr. Sneha Chauhan",
     specialization: "Endocrinologist",
     date: "2023-06-15",
     time: "10:00 AM",
@@ -11,7 +11,7 @@ const appointments = [
   },
   {
     id: 2,
-    doctor: "Dr. Michael Lee",
+    doctor: "Dr. Sudhir Kumar",
     specialization: "HRT Specialist",
     date: "2023-06-22",
     time: "2:30 PM",

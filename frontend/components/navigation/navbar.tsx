@@ -43,7 +43,7 @@ export function Navbar() {
         <NavLinks />
         <LanguageSelector />
         <Link href="/auth">
-          <Button>Sign In</Button>
+          {/* <Button>Sign In</Button> */}
         </Link>
       </div>
 
