@@ -1,19 +1,39 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 interface MoodEntry {
   date: string;
   mood: number;
+  stress: number;
+  energy: number;
+  note: string;
 }
 
 export default function MoodTracker() {
   const [mood, setMood] = useState<number>(5);
+  const [stress, setStress] = useState<number>(5);
+  const [energy, setEnergy] = useState<number>(5);
+  const [note, setNote] = useState<string>("");
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
 
   useEffect(() => {
@@ -27,12 +47,18 @@ export default function MoodTracker() {
     e.preventDefault();
     const newEntry: MoodEntry = {
       date: new Date().toISOString().split("T")[0],
-      mood: mood,
+      mood,
+      stress,
+      energy,
+      note,
     };
     const updatedHistory = [...moodHistory, newEntry];
     setMoodHistory(updatedHistory);
     localStorage.setItem("moodHistory", JSON.stringify(updatedHistory));
-    setMood(5); // Reset mood to neutral after submission
+    setMood(5);
+    setStress(5);
+    setEnergy(5);
+    setNote("");
   };
 
   return (
@@ -41,9 +67,11 @@ export default function MoodTracker() {
         {/* Mood Input Section */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center text-purple-800">Mood Tracker</CardTitle>
+            <CardTitle className="text-3xl font-bold text-center text-purple-800">
+              Mood Tracker
+            </CardTitle>
             <CardDescription className="text-center text-purple-600">
-              Track your daily mood and see your progress over time
+              Track your daily mood, stress, and energy levels
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -63,6 +91,48 @@ export default function MoodTracker() {
                   required
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="stress" className="text-lg font-medium text-purple-700">
+                  Stress Level (1-10)
+                </Label>
+                <Input
+                  id="stress"
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={stress}
+                  onChange={(e) => setStress(Number(e.target.value))}
+                  className="text-lg"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="energy" className="text-lg font-medium text-purple-700">
+                  Energy Level (1-10)
+                </Label>
+                <Input
+                  id="energy"
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={energy}
+                  onChange={(e) => setEnergy(Number(e.target.value))}
+                  className="text-lg"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="note" className="text-lg font-medium text-purple-700">
+                  Add a note (optional)
+                </Label>
+                <Input
+                  id="note"
+                  type="text"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  className="text-lg"
+                />
+              </div>
               <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                 Log Mood
               </Button>
@@ -73,7 +143,9 @@ export default function MoodTracker() {
         {/* Mood History Chart */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center text-purple-800">Your Mood History</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center text-purple-800">
+              Your Mood History
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px] w-full">
@@ -82,7 +154,10 @@ export default function MoodTracker() {
                   <XAxis dataKey="date" tickFormatter={(date: string) => date.split("-").slice(1).join("/")} />
                   <YAxis domain={[1, 10]} />
                   <Tooltip contentStyle={{ backgroundColor: "#fff", borderRadius: "8px", padding: "10px" }} />
-                  <Line type="monotone" dataKey="mood" stroke="#6B46C1" strokeWidth={2} dot={{ r: 4 }} />
+                  <Legend />
+                  <Line type="monotone" dataKey="mood" stroke="#6B46C1" strokeWidth={2} dot={{ r: 4 }} name="Mood" />
+                  <Line type="monotone" dataKey="stress" stroke="#E53E3E" strokeWidth={2} dot={{ r: 4 }} name="Stress" />
+                  <Line type="monotone" dataKey="energy" stroke="#38A169" strokeWidth={2} dot={{ r: 4 }} name="Energy" />
                 </LineChart>
               </ResponsiveContainer>
             </div>

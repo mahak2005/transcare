@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 // app/api/signup/route.ts
 import { NextResponse } from 'next/server';
 // import bcrypt from 'bcryptjs';
@@ -10,7 +11,7 @@ interface User {
 
 const users: User[] = [];
 export async function POST(request: Request) {
-  const { lastName, email, password } = await request.json();
+  const { lastName, email } = await request.json();
 
   const userExists = users.find(user => user.email === email);
   if (userExists) {

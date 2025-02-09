@@ -1,8 +1,8 @@
 "use client"
 import AppointmentScheduler from "@/components/hrt/AppointmentScheduler"
-import VideoConsultation from "@/components/hrt/VideoConsultation"
+// import VideoConsultation from "@/components/hrt/VideoConsultation"
 import PrescriptionManagement from "@/components/hrt/PrescriptionManagement"
-import MedicationDeliveryTracking from "@/components/hrt/MedicationDeliveryTracking"
+// import MedicationDeliveryTracking from "@/components/hrt/MedicationDeliveryTracking"
 import ProgressTracker from "@/components/hrt/ProgressTracker"
 import { Navbar } from "@/components/navigation/navbar"
 
