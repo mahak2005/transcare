@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from '@/components/navigation/navbar';
+import { useRouter } from 'next/navigation';
 
 export default function About() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ export default function About() {
     selfcare: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,13 +34,23 @@ export default function About() {
   };
 
   return (
-    <div className ="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
-        <Navbar />
+    
+
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 via-pink-100 to-blue-100">
+      {/* Remind Me Later Button */}
+      <div className="flex justify-start mt-4 px-6">
+        <button 
+          onClick={() => router.push('/')} 
+          className="text-purple-600 px-4 py-2 rounded-lg font-semibold shadow-md transition"
+        >
+          Remind Me Later
+        </button>
+      </div>
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
          
          
      {/* Heading */}
-      <h1 className="text-3xl font-bold text-purple-600 mb-6">About You</h1>
+      <h1 className="text-3xl font-bold text-purple-600 mb-6">Let Us Know More About You</h1>
       <p className="text-gray-600 mb-4">Help us personalize your experience by answering a few questions.</p>
 
     {/* Form Start */}

@@ -16,7 +16,7 @@ export function AuthForm({ isLogin, onToggleAuthMode }: AuthFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/"); // Redirect user to homepage after clicking Login
+    router.push("/about"); // Redirect user to homepage after clicking Login
   };
 
   return (
