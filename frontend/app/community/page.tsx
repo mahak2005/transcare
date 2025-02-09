@@ -34,7 +34,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 58,
       comments: 22,
-      image: "/hrt-guide.svg?height=200&width=300",
+      image: "/lgbtimg.jpg",
     },
     {
       id: 2,
@@ -45,7 +45,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 76,
       comments: 30,
-      image: "/trans-healthcare.svg?height=200&width=300",
+      image: "/img.jpg",
     },
     {
       id: 3,
@@ -56,7 +56,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 105,
       comments: 45,
-      image: "/personal-journey.svg?height=200&width=300",
+      image: "/lgbtimg.jpg",
     },
     {
       id: 4,
@@ -67,7 +67,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 64,
       comments: 19,
-      image: "/legal-rights.svg?height=200&width=300",
+      image: "/project.jpg",
     },
     {
       id: 5,
@@ -78,7 +78,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 89,
       comments: 33,
-      image: "/mental-health.svg?height=200&width=300",
+      image: "/lgbtimg.jpg",
     },
     {
       id: 6,
@@ -89,7 +89,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 53,
       comments: 18,
-      image: "/affordable-hrt.svg?height=200&width=300",
+      image: "/project.jpg",
     },
     {
       id: 7,
@@ -100,7 +100,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 112,
       comments: 50,
-      image: "/clinic-list.svg?height=200&width=300",
+      image: "/lgbtimg.jpg",
     },
     {
       id: 8,
@@ -111,7 +111,7 @@ export const BlogSection: React.FC = () => {
       content: "Full content of the blog post goes here...",
       likes: 70,
       comments: 25,
-      image: "/family-support.svg?height=200&width=300",
+      image: "/img.jpg",
     },
     // Add more initial blog posts here
   ])
